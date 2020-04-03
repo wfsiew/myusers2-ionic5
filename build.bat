@@ -1,2 +1,3 @@
-ionic cordova build android --prod
+ionic build --prod
+npx cap open android
 pause
