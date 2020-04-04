@@ -17,7 +17,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-virtual-scroll [items]="users">
+  <ion-virtual-scroll [items]="users" approxItemHeight="320px">
     <ion-item *virtualItem="let user;" button (click)="itemTapped($event, user)">
       <ion-thumbnail slot="start">
         <ion-img [src]="user.avatar"></ion-img>
@@ -26,6 +26,13 @@
       <ion-note slot="end">{{ user.id}}</ion-note>
     </ion-item>
   </ion-virtual-scroll>
+
+  <ion-infinite-scroll (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
   <!-- <ion-list>
     <ion-item button *ngFor="let user of users" (click)="itemTapped($event, user)">

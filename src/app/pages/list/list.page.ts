@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+import { IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 import { Utils } from 'src/app/helpers/utils';
 
@@ -15,14 +16,18 @@ export class ListPage implements OnInit {
   users: any = [];
   page = 1;
 
+  @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
+  @ViewChild(IonVirtualScroll, { static: false }) virtualScroll: IonVirtualScroll;
+
   constructor(
     private router: Router,
     private userService: UserService,
     public loadingController: LoadingController
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.load().then(() => {});
+    this.loadData(null);
   }
 
   async load() {
@@ -31,15 +36,26 @@ export class ListPage implements OnInit {
       duration: 2000
     });
     await loading.present();
-    this.userService.getUsers(this.page).subscribe(k => {
-      this.users = k;
+    this.userService.getUsers(this.page).subscribe((k: any) => {
+      for (let i = 0; i < k.length; i++) {
+        this.users.push(k[i]);
+      }
+      this.page = this.page + 1;
+      this.virtualScroll.checkEnd();
+      this.infiniteScroll.complete();
       Utils.dismissLoading(loading);
     });
   }
 
   async refresh(event) {
+    this.page = 1;
+    this.users = [];
     await this.load();
     event.target.complete();
+  }
+
+  async loadData(event) {
+    await this.load();
   }
 
   createUser() {
