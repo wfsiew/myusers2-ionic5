@@ -17,7 +17,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-virtual-scroll [items]="users" approxItemHeight="320px">
+  <ion-virtual-scroll [items]="users">
     <ion-item *virtualItem="let user;" button (click)="itemTapped($event, user)">
       <ion-thumbnail slot="start">
         <ion-img [src]="user.avatar"></ion-img>
