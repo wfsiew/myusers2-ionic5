@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from 'src/app/models/models';
 
@@ -23,9 +23,12 @@ export class UserService {
     return this.http.post(uri, k);
   }
 
-  getUsers() {
-    const uri = `${this.baseuri}/api/users?per_page=50`;
-    return this.http.get(uri).pipe(map(k => {
+  getUsers(page: number) {
+    let prm: HttpParams = new HttpParams()
+      .set('page', page.toString())
+      .set('per_page', '50');
+    const uri = `${this.baseuri}/api/users`;
+    return this.http.get(uri, { params: prm }).pipe(map(k => {
       return k['data'];
     }));
   }

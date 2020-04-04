@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'List',
+      title: 'Users',
       url: '/list',
       icon: 'list'
     }

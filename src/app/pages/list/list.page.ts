@@ -13,6 +13,7 @@ export class ListPage implements OnInit {
 
   title = 'USERS';
   users: any = [];
+  page = 1;
 
   constructor(
     private router: Router,
@@ -30,7 +31,7 @@ export class ListPage implements OnInit {
       duration: 2000
     });
     await loading.present();
-    this.userService.getUsers().subscribe(k => {
+    this.userService.getUsers(this.page).subscribe(k => {
       this.users = k;
       Utils.dismissLoading(loading);
     });
