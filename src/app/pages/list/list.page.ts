@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { IonInfiniteScroll, IonVirtualScroll } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
+import { MessageService } from 'src/app/services/message.service';
 import { Utils } from 'src/app/helpers/utils';
 
 @Component({
@@ -22,12 +23,18 @@ export class ListPage implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
+    private msService: MessageService,
     public loadingController: LoadingController
   ) {
+    this.msService.get().subscribe((res: any) => {
+      if (res.name === 'user:updated') {
+        this.load().then(() => {});
+      }
+    });
   }
 
   ngOnInit() {
-    this.loadData(null);
+    this.load().then(() => {});
   }
 
   async load() {

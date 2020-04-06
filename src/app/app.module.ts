@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { UserService } from './services/user.service';
+import { MessageService } from './services/message.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,8 @@ import { UserService } from './services/user.service';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    UserService
+    UserService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

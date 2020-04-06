@@ -3,6 +3,7 @@ import { ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { MessageService } from 'src/app/services/message.service';
 import { User } from 'src/app/models/models';
 import { Utils } from 'src/app/helpers/utils';
 
@@ -23,6 +24,7 @@ export class EditPage implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
+    private msService: MessageService,
     private toastController: ToastController
   ) {
     this.createForm();
@@ -54,6 +56,7 @@ export class EditPage implements OnInit {
     let m = this.mform.value;
     let o = new User(this.id, m.first_name, m.last_name, '');
     this.userService.updateUser(o).subscribe(k => {
+      this.msService.send('user:updated', o);
       Utils.showToast('User has been successfully updated', this.toastController);
       this.router.navigate(['/list']);
     });
