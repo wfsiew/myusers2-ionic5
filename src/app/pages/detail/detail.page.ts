@@ -37,7 +37,7 @@ export class DetailPage implements OnInit {
       duration: 2000
     });
     await loading.present();
-    this.user = this.userService.getUser(this.id).subscribe(k => {
+    this.userService.getUser(this.id).subscribe(k => {
       this.user = k;
       Utils.dismissLoading(loading);
     });
