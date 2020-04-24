@@ -28,7 +28,7 @@ export class ListPage implements OnInit {
   ) {
     this.msService.get().subscribe((res: any) => {
       if (res.name === 'user:updated') {
-        this.load().then(() => {});
+        this.refresh(null).then(() => {});
       }
     });
   }
